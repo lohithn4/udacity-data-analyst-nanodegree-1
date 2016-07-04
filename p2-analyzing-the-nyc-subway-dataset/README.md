@@ -1,6 +1,6 @@
-Analyzing the NYC Subway Dataset
+# **Analyzing the NYC Subway Dataset**
 
-# **Statistical Test**
+## **Statistical Test**
 
 **1.1 Which statistical test did you use to analyze the NYC subway data? Did you use a one-tail or a two-tail P value? What is the null hypothesis? What is your p-critical value?**
 
@@ -20,7 +20,7 @@ This test is applicable to the dataset because it does not assumes the samples a
 
 There is a statistical difference between the number of entries for rainy and non-rainy days. Given that the p-value is very small, we can reject the the null hypothesis. Looking at the means, we see rain increases ridership, but of course this is not enough evidence to fully support this affirmation. What we can affirm is that the population of ridership with rain is different than the one without rain. 
 
-# **Linear Regression**
+## **Linear Regression**
 
 **2.1 What approach did you use to compute the coefficients theta and produce prediction for ENTRIESn_hourly in your regression model:**
 
@@ -50,7 +50,7 @@ The R^2 value is a statistic we use to evaluate the fit of a model and the relat
 
 Given that we are trying to predict human behaviour I would say that is linear model is "appropriate" to predict ridership. For other cases like mechanical processes or for example if we needed a model to make an investment, we would need a better model with a better R^2.
 
-# **Visualization**
+## **Visualization**
 
 **3.1 One visualization should contain two histograms: one of  ENTRIESn_hourly for rainy days and one of ENTRIESn_hourly for non-rainy days.**
 
@@ -68,7 +68,7 @@ From this histogram the main insight we can see is that the data is not normally
 
 We can compare these 2 bar charts and see entries by day of the week when its raining and when it’s not. What mainly called my attention is that I was expecting both graphs to follow the same trend. This could also be caused by the difference in the amount of data for rainy vs. non rainy days.
 
-# **Conclusion**
+## **Conclusion**
 
 **4.1 From your analysis and interpretation of the data, do more people ride the NYC subway when it is raining or when it is not raining?**  
 
@@ -80,7 +80,7 @@ In one hand we have the results from the Mann-Whitney U-Test which as we saw in 
 
 Now on the other hand, as we saw in question 2.4 when we look at our linear regression model we can see that the "rain" parameter has a coefficient of 37.011838. From the dataset we know that this parameter can have values only of 0 (no rain) and 1 (rain). This mean when it rains we “add” 37.011838 entries hourly. Therefore concluding that rain increases ridership. 
 
-# **Reflection**
+## **Reflection**
 
 **5.1 Please discuss potential shortcomings of the methods of your analysis, including:**
 
@@ -94,25 +94,16 @@ Another possible shortcoming of the dataset is the hours of the day for which we
 
 For the analysis the main issue that I would bring, like I mentioned before, is that we are trying to make a model to predict human behaviour which is a harder thing to do. As mentioned [here](http://blog.minitab.com/blog/adventures-in-statistics/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit), for these types of analyses an R^2 value of less than 50% is acceptable. 
 
-# **References**
+## **References**
 
 * [http://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html](http://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html)
-
 * [https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test](https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test)
-
 * [http://pandas.pydata.org/pandas-docs/stable/generated/pandas.get_dummies.html](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.get_dummies.html)
-
 * [http://blog.minitab.com/blog/adventures-in-statistics/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit](http://blog.minitab.com/blog/adventures-in-statistics/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit)
-
 * [https://discussions.udacity.com/t/project-1-what-is-dummy-and-non-dummy-variables/23302](https://discussions.udacity.com/t/project-1-what-is-dummy-and-non-dummy-variables/23302)
-
 * [http://ggplot.yhathq.com/docs/geom_histogram.html](http://ggplot.yhathq.com/docs/geom_histogram.html)
-
 * [http://stackoverflow.com/questions/22599521/how-do-i-create-a-bar-chart-in-python-ggplot](http://stackoverflow.com/questions/22599521/how-do-i-create-a-bar-chart-in-python-ggplot)
-
 * [http://docs.ggplot2.org/current/scale_continuous.html](http://docs.ggplot2.org/current/scale_continuous.html)
-
 * [http://www.statsoft.com/Textbook/Multiple-Regression#cresidual](http://www.statsoft.com/Textbook/Multiple-Regression#cresidual)
 
 **_*Note_***: All results are based on the turnstile_weather_v2.csv file which I used locally and analysed with the scripts in the folder "code".*
-
