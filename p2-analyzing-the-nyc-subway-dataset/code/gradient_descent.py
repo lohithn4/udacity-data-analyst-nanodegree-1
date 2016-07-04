@@ -1,0 +1,89 @@
+import numpy as np
+import pandas
+from sklearn.linear_model import SGDRegressor
+
+def normalize_features(features):
+    ''' 
+    Returns the means and standard deviations of the given features, along with a normalized feature
+    matrix.
+    ''' 
+    means = np.mean(features, axis=0)
+    std_devs = np.std(features, axis=0)
+    normalized_features = (features - means) / std_devs
+    return means, std_devs, normalized_features
+
+def recover_params(means, std_devs, norm_intercept, norm_params):
+    ''' 
+    Recovers the weights for a linear model given parameters that were fitted using
+    normalized features. Takes the means and standard deviations of the original
+    features, along with the intercept and parameters computed using the normalized
+    features, and returns the intercept and parameters that correspond to the original
+    features.
+    ''' 
+    intercept = norm_intercept - np.sum(means * norm_params / std_devs)
+    params = norm_params / std_devs
+    return intercept, params
+
+def linear_regression(features, values):
+    """
+    Perform linear regression given a data set with an arbitrary number of features.
+    """
+    X = features
+    y = values
+    clf = SGDRegressor(n_iter=20)
+    results = clf.fit(X, y)
+    intercept = results.intercept_[0]
+    params = results.coef_
+    return intercept, params
+
+def predictions(dataframe):
+    ################################ MODIFY THIS SECTION #####################################
+    # Select features. You should modify this section to try different features!             #
+    # We've selected rain, precipi, Hour, meantempi, and UNIT (as a dummy) to start you off. #
+    # See this page for more info about dummy variables:                                     #
+    # http://pandas.pydata.org/pandas-docs/stable/generated/pandas.get_dummies.html          #
+    ##########################################################################################
+    features = dataframe[['rain', 'hour', 'meantempi', 'meanpressurei']]
+    dummy_units = pandas.get_dummies(dataframe['UNIT'], prefix='unit')
+    features = features.join(dummy_units)
+    
+    # Values
+    values = dataframe['ENTRIESn_hourly']
+    
+    # Get numpy arrays
+    features_array = features.values
+    values_array = values.values
+    
+    means, std_devs, normalized_features_array = normalize_features(features_array)
+
+    # Perform gradient descent
+    norm_intercept, norm_params = linear_regression(normalized_features_array, values_array)
+    
+    intercept, params = recover_params(means, std_devs, norm_intercept, norm_params)
+    
+    predictions = intercept + np.dot(features_array, params)
+    # The following line would be equivalent:
+    # predictions = norm_intercept + np.dot(normalized_features_array, norm_params)
+    
+    return predictions
+    
+def compute_r_squared(original_data, predictions):
+    SSres = np.sum((original_data - predictions)**2)
+    SStot = np.sum((original_data - np.mean(original_data))**2)
+    r_squared = 1 - (SSres / SStot)
+    return r_squared    
+
+##-----------------------------------------------------------------------------
+    
+turnstile_weather = pandas.read_csv('turnstile_weather_v2.csv')
+predictions = predictions(turnstile_weather)
+r_squared = compute_r_squared(turnstile_weather['ENTRIESn_hourly'], predictions)
+
+print('The R^2 value is: {}').format(r_squared)    
+    
+    
+    
+    
+    
+    
+    
