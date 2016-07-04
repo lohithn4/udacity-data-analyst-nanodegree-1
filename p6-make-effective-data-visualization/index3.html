@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Data Visualization: Titanic Dataset</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/jquery-2.2.4.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/d3.min.js"></script>
+  <script src="js/dimple.v2.2.0.min.js"></script>
+  <script src="js/script2.js"></script>
+</head>
+<body>
+
+<div id="chart1Text" class="chartDiv">
+  <h3>Women, upper-class and children had better chances to survive the Titanic</h3>
+  
+  <p> About 68% of the passengers and crew died when the Titanic sank because there were not enough lifeboats. For this reason, there were some groups more likely to survive than others, such as women, children and upper-class. In this chart you can see the "survival rates" of each of the groups. The bigger the bubble, the higher the chances of survival (hover to see exact value).</p>
+  
+  <p class="legend">Click legend to show/hide Passenger Class:</p>
+</div>
+<div id="chart1Container" class="chartDiv"></div>
+
+	<script type="text/javascript">
+		
+		function draw(data) {
+
+      //var d = getMyData(data);
+      //debugger;
+
+      var width  = 590;
+      var height = 400;
+
+			var svg = dimple.newSvg("#chart1Container", width, height);
+      var myChart = new dimple.chart(svg, data);
+      myChart.setBounds(95, 25, 475, 335)
+
+      var x = myChart.addCategoryAxis("x", ["sex", "passenger_class"]);
+      x.title = "Sex / Class";
+
+      var y = myChart.addCategoryAxis("y", "age_group");
+      y.title = "Age Group"
+
+      var z = myChart.addMeasureAxis("z", "survival_rate");
+
+      var s = myChart.addSeries("passenger_class", dimple.plot.bubble);
+
+      z.overrideMax = 180;
+
+      var myLegend = myChart.addLegend(240, 10, 330, 20, "right");
+      //myChart.addLegend(240, 10, 330, 20, "right");
+
+      myChart.draw();
+
+
+      // This is a critical step.  By doing this we orphan the legend. This
+      // means it will not respond to graph updates.  Without this the legend
+      // will redraw when the chart refreshes removing the unchecked item and
+      // also dropping the events we define below.
+      myChart.legends = [];
+
+      // Get a unique list of Owner values to use when filtering
+      var filterValues = dimple.getUniqueValues(data, "passenger_class");
+      
+      // Get all the rectangles from our now orphaned legend
+      myLegend.shapes.selectAll("rect")
+        // Add a click event to each rectangle
+        .on("click", function (e) {
+          // This indicates whether the item is already visible or not
+          var hide = false;
+          var newFilters = [];
+          // If the filters contain the clicked shape hide it
+          filterValues.forEach(function (f) {
+            if (f === e.aggField.slice(-1)[0]) {
+              hide = true;
+            } else {
+              newFilters.push(f);
+            }
+          });
+        // Hide the shape or show it
+        if (hide) {
+          d3.select(this).style("opacity", 0.2);
+        } else {
+          newFilters.push(e.aggField.slice(-1)[0]);
+          d3.select(this).style("opacity", 0.8);
+        }
+        
+        // Update the filters
+        filterValues = newFilters;
+        
+        // Filter the data
+        myChart.data = dimple.filterData(data, "passenger_class", filterValues);
+        
+        // Passing a duration parameter makes the chart animate. Without
+        // it there is no transition
+        myChart.draw(800);
+
+  		});
+    }
+
+	</script>
+	<script type="text/javascript">
+  		// Use D3 (not dimple.js) to load the TSV file and 
+  		// pass the contents of it to the draw function
+  		d3.tsv("data/titanic_data_cleaned_2.tsv", draw);
+  	</script>
+
+</body>
+</html>

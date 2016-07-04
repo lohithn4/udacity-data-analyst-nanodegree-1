@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Data Visualization: Titanic Dataset</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/d3.min.js"></script>
+  <script src="js/dimple.v2.2.0.min.js"></script>
+  <script src="js/script.js"></script>
+</head>
+<body>
+
+<div id="chart1Container" class="chartDiv"></div>
+
+<div id="chart2Container" class="chartDiv"></div>
+
+	<script type="text/javascript">
+		
+		function draw(data) {
+			
+
+			var width  = 590;
+			var height = 400;
+
+			/***************
+  			 * First Chart *
+			 ***************/
+
+			// Add title
+			d3.select('#chart1Container').append('h2').text('Survival Rate by Class & Sex');
+			
+			var svg = dimple.newSvg("#chart1Container", width, height);
+			
+			// Go throught data and get survival rate dataset
+			var myData = getSurvivalRatesClass(data);
+
+			var barChart = new dimple.chart(svg, myData);
+
+			var x = barChart.addCategoryAxis("x", ["passenger_class", "sex"]);
+			var y = barChart.addMeasureAxis("y", "survival_rate");
+			
+			barChart.addSeries("sex", dimple.plot.bar);
+			barChart.addLegend(37, 10, 510, 20, "right");
+			
+			// Axis Titles
+			x.title = "Passenger Class / Sex";
+			y.title = "Survival Rate";
+			
+			barChart.draw();
+
+			/****************
+  			 * Second Chart *
+			 ****************/
+
+			// Add title
+			d3.select('#chart2Container').append('h2').text('Survival Rate by Age Group');
+			
+			var svg2 = dimple.newSvg("#chart2Container", width, height);
+			
+			// Go throught data and get survival rate dataset
+			myData2 = getSurvivalRatesAge(data);
+
+			var barChart = new dimple.chart(svg2, myData2);
+
+			var x = barChart.addCategoryAxis("x", ["age_group"]);
+			x.addOrderRule(["0-15", "16-30", "31-45", "46-60", "60+", "NaN"]);
+			
+			var y = barChart.addMeasureAxis("y", "survival_rate");
+			
+			barChart.addSeries("age_group", dimple.plot.bar);
+			
+			// Axis Titles
+			x.title = "Age Group";
+			y.title = "Survival Rate";
+			
+			barChart.draw();
+
+		}
+
+	</script>
+	<script src="js/script.js"></script>
+	<script type="text/javascript">
+  		// Use D3 (not dimple.js) to load the TSV file and 
+  		// pass the contents of it to the draw function
+  		d3.tsv("data/titanic_data_cleaned.tsv", draw);
+  	</script>
+
+</body>
+</html>

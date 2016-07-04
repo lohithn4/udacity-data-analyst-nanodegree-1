@@ -1,0 +1,33 @@
+.chartDiv h2 {
+	font-size: 20px;
+	width: 590px;
+	text-align: center;
+}
+
+#filtersContainer {
+
+	padding: 60px;
+	background-color: #E3E3E3;
+	padding-top: 30px;
+}
+
+#filtersContainer select {
+	width: 160px;
+	margin-right: 40px;
+}
+
+#chart1Text {
+	width: 590px;
+    padding-left: 95px;
+}
+
+#chart1Text p {
+	margin-top: 20px;
+    font-size: 13px;
+}
+
+#chart1Text .legend {
+	text-align: right;
+    padding-right: 35px;
+    font-size: 10px;
+}

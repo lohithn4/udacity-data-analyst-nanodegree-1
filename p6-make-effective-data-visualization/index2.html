@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Data Visualization: Titanic Dataset</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/jquery-2.2.4.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/d3.min.js"></script>
+  <script src="js/dimple.v2.2.0.min.js"></script>
+  <script src="js/script.js"></script>
+</head>
+<body>
+
+<div id="filtersContainer">
+	<h3>Data Visualization: Titanic Dataset</h3>
+	<p>Please select your dimensions:</p>
+	<form class="form-inline">
+		<select id="formSelect" class="form-control">
+			<option value="passenger_class">Passenger Class</option>
+			<option value="age_group">Age Group</option>
+		</select>
+
+		<label class="checkbox-inline">
+	  		<input type="checkbox" id="formCheck" value="sex_filter"> Filter by Sex?
+		</label>
+	</form>
+</div>
+
+<div id="chart1Container" class="chartDiv"></div>
+
+	<script type="text/javascript">
+		
+		function draw(data) {
+
+			// Get filter options and make chart
+			var filter = getCurrentFilter();
+			makeChart(filter, data);
+
+		}
+
+	</script>
+	<script type="text/javascript">
+  		
+  		// Use D3 (not dimple.js) to load the TSV file and 
+  		// pass the contents of it to the draw function
+  		d3.tsv("data/titanic_data_cleaned.tsv", draw);
+
+  		// On filter change, clear and draw again
+  		$('#formSelect').change(function(){
+  			$('#chart1Container').empty();
+  			d3.tsv("data/titanic_data_cleaned.tsv", draw);
+  		});
+
+  		$('#formCheck').change(function(){
+  			$('#chart1Container').empty();
+  			d3.tsv("data/titanic_data_cleaned.tsv", draw);
+  		});
+
+  	</script>
+
+</body>
+</html>
