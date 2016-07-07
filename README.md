@@ -1,5 +1,7 @@
 # Udacity - Data Analyst Nanodegree
 
+![Certificate](certificate.png)
+
 ## About
 This repository contains project work for Udacity's [Data Analyst Nanodegree](https://www.udacity.com/course/data-analyst-nanodegree--nd002).
 
@@ -33,4 +35,3 @@ Create a data visualization from a data set that tells a story or highlights tre
 
 Make design decisions for an A/B test, including which metrics to measure and how long the test should be run. Analyze the results of an A/B test that was run by Udacity and recommend whether or not to launch the change.
 
-![Certificate](certificate.png)
