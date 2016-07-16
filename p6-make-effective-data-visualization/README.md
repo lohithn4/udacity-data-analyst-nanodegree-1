@@ -52,6 +52,8 @@ Also, a general title and a concise introductory text were added. This helps hig
 
 The final visualization code can be seen in the **index3.html** file.
 
+See it live [here](https://bl.ocks.org/sarinograsso/raw/66b59a56f78aa3fcd0bbfce720a21966/).
+
 ![Chart 4](images/image03.png)
 
 ### Resources
